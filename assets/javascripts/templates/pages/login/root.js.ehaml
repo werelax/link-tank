@@ -1,0 +1,23 @@
+%header.jumbotron
+  %h1 LinkTank
+  %p.lead Grow your own web
+
+.row
+  .span12
+    .bonsai-logo
+
+.row
+  .span3
+    %h2 Explore
+    %p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  .span3
+    %h2 Collect
+    %p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  .span3
+    %h2 Search
+    %p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  .span3
+    .well
+      %a.e-login-button.btn.btn-warning.btn-large{href:'#'}
+        %i.icon-user.icon-white>
+        = " Login with Google »"

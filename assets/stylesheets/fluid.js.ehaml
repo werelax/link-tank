@@ -1,0 +1,7 @@
+.container-fluid
+  .row-fluid
+    .span2
+      .well.sidebar-nav
+        .e-sidbar
+    .span10
+      .e-page-root
