@@ -7,3 +7,8 @@ gem 'sprockets'
 gem 'haml'
 gem 'sinatra'
 gem 'shotgun'
+
+# Server
+
+gem 'goliath'
+gem 'em-synchrony'
