@@ -20,8 +20,21 @@ Router = do ->
 
 Core = {}
 
+class Channel
+  subscribe: (type, fn, ctx) ->
+    @events[type] ||= []
+    @events[type].push({context: ctx, callback: fn || this})
+  unsubscribe: (chn, fn) ->
+    # pending
+  publish: (type, args...) ->
+    unless @events[type] then return false
+    for subscriber in @events[type]
+      subscriber.callback.apply(subscriber.context, args)
+  constructor: ->
+    @events = {}
+
 class Sandbox
-  create_channel: () ->
+  create_channel: -> new Channel
 
 class PageSandbox extends Sandbox
 
