@@ -11,7 +11,7 @@
 
 /* Templates */
 
-/*= require templates/test */
+/*= require_tree ./templates */
 
 /* App Code */
 

@@ -1,6 +1,12 @@
 %html
   %head
     %script{src:'/assets/javascripts/application.js'}
-    %link{href: '/assets/stylesheets/application.css', rel:'stylesheet', media:'screen', type: 'text/css'}
+    %link{href: "/assets/stylesheets/application.css", rel:'stylesheet', type:'text/css'}
   %body
-    .container
+    .navbar.navbar-fixed-top
+      .navbar-inner
+        .container
+          %a.brand LINKTANK
+          %ul.nav
+            %li
+              %a{href:'#'} Search

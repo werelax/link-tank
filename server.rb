@@ -13,6 +13,7 @@ end
 get '/assets/stylesheets/application.css' do
   env = Sprockets::Environment.new
   env.append_path 'assets/stylesheets'
+  headers 'Content-Type' => 'text/css'
   env['application.css'].to_s
 end
 
