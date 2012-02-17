@@ -1,0 +1,5 @@
+.container
+  .e-page-root
+
+  %footer.footer
+    %p © Favmonster 2012

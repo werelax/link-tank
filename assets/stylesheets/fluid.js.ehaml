@@ -1,0 +1,15 @@
+.navbar.navbar-fixed-top
+  .navbar-inner
+    .container
+      %a.brand LINKTANK
+      %ul.nav
+        %li
+          %a{href:'#'} Search
+
+.container-fluid
+  .row-fluid
+    .span2
+      .well.sidebar-nav
+        .e-sidbar
+    .span10
+      .e-page-root
