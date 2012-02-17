@@ -1,4 +1,5 @@
 require 'haml'
+require 'sass'
 require 'sinatra'
 require 'sprockets'
 require 'coffee-script'
