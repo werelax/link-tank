@@ -55,17 +55,20 @@ class PageSandbox extends Sandbox
     Core.get_page_root()
 
 class Page
-  constructor: ->
+  constructor: (title: @title, url: @url) ->
     @_sandbox = new PageSandbox()
   load: (channel, load_params...) ->
     _.extend @_sandbox, channel
     @_onload.apply @, [@_sandbox].concat(load_params)
+  unload: (cb, args...) ->
+    @_onunload?.apply @, [@_sandbox, cb].concat(args)
   onload: (start_fn) ->
     @_onload = ->
       Page.active = this
       start_fn(@_sandbox)
-  unload: (stop_fn) ->
-    stop_fn(@_sandbox)
+  onunload: (stop_fn) ->
+    @_onunload = (cb) ->
+      stop_fn(@_sandbox, cb)
 
 exports['Core']    = Core
 exports['Sandbox'] = Sandbox
@@ -78,6 +81,8 @@ exports['Page']    = Page
 # What code do I want to write
 
 MainPage = new Page(title: 'Link Tank', url: 'main')
+
+MainPage.on_url 'main/search/:query', ''
 
 MainPage.onload (page_sandbox) ->
   root = page_sandbox.get_root()
@@ -111,11 +116,20 @@ LinkTank = new App()
 LinkTank.load (channel) ->
   body = Core.find('body')
   body.html(T['templates/layouts/fixed'])
-  channel = new Channel()
-  LoginPage.load(channel)
-  channel.subscribe 'login', -> console.log("AKAN!")
-  # MainPage.load()
 
+  channel = new Channel()
+
+  LoginPage.load(channel)
+  channel.subscribe 'login', ->
+    LoginPage.unload()
+    body.fadeOut ->
+      body.html T['templates/layouts/fluid']
+      MainPage.load(channel)
+      body.fadeIn()
+
+  Router.add_route MainPage.url, 'main', -> channel.publish('load:MainPage')
+
+  Router.start()
 
 #$ ->
   # p1 = new Page('Test', 'test/:some')
@@ -123,3 +137,12 @@ LinkTank.load (channel) ->
   # Router.add_route 'jarl', 'jarl', -> alert("jarl")
   # Router.add_route 'jorl', 'jorl', -> console.log("jorl?")
   # Router.start()
+
+# Page Navigation -> StateMachine!
+# Specific routing, like #inbox/msg/12:
+#  - Just send the rest of the URL as a message to 'inbox'
+#  (1) If 'inbox' is not loaded, then load it
+#  (2) Send the 'msg' event with '12' as the param
+
+# So the 'onload' method JUST builds the thing, but DO NOT act
+# If no other event is specified, the router sends 'start' to the page
