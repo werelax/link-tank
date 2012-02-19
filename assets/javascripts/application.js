@@ -16,4 +16,6 @@
 /* App Code */
 
 /*= require core */
+/*= require statemachine */
+/*= require main */
 /*= require_tree ./pages */

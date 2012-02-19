@@ -1,6 +1,7 @@
 !spec/javascripts/generated/lib
 *.swo
 *.swp
+*.swn
 .DS_Store
 .bundle
 .project
