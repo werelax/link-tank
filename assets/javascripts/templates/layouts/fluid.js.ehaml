@@ -3,13 +3,34 @@
     .container
       %a.brand LINKTANK
       %ul.nav
+        %li.active
+          %a{href:'#main'} Search
         %li
-          %a{href:'#'} Search
+          %a{href:'#main'} Settings
+        %li
+          %a{href:'#main'} Bookmarklets
+      %ul.nav.pull-right
+        %li
+          %a.pull-right{href:'#main'} Sign Out
 
-.container-fluid
-  .row-fluid
-    .span2
-      .well.sidebar-nav
-        .e-sidbar
-    .span10
+.container
+  .row
+    .span3.sidebar
+      .sidebar-nav.user-info
+        %img.thumbnail{src:'https://secure.gravatar.com/avatar/6d5250f50e82bbc8c3daede117b3d031?d=https://www.readability.com/media/images/avatar.png&s=36', style: 'float: left'}
+        %h3 Elías Alonso
+        %h6.subtitle 234 pages grown
+      .sidebar-nav.well{style: 'padding: 8px 0'}
+        %ul.nav.nav-list
+          %li.nav-header
+            Buckets
+          %li.active
+            %a All
+          %li
+            %a Programming
+          %li
+            %a History
+          %li
+            %a Downloads
+    .span9
       .e-page-root

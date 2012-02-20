@@ -5,7 +5,7 @@
 # (3) Define behaviour by filters (like rails controllers)
 # (4) Trigger by events
 
-exports = (this['Wrlx'] ||= {})
+exports = (this['W'] ||= {})
 
 class StateMachine
   constructor: (name: @name, channel: @channel, events: @events) ->

@@ -17,7 +17,9 @@ Login = new W.Page
     root = @sandbox.get_root()
     root.fadeOut =>
       @sandbox.publish('leave')
+      $(document.body).hide()
       cb()
+      $(document.body).fadeIn()
 
 Main = new W.Page
   routes:
@@ -26,9 +28,8 @@ Main = new W.Page
   load: (cb) ->
     Session['logged'] = true
     root = @sandbox.get_root()
-    $(document.body).hide()
     root.html T['templates/pages/main/root']
-    $(document.body).fadeIn(cb)
+    cb()
   do_search: (query) ->
     console.log 'Searching for:' + query
 
@@ -36,6 +37,8 @@ Main = new W.Page
 $ ->
   set_fixed_template = -> document.body.innerHTML = T['templates/layouts/fixed']
   set_fluid_template = -> document.body.innerHTML = T['templates/layouts/fluid']
+
+  set_fluid_template()
 
   Login.sandbox.subscribe 'enter', set_fixed_template
   Login.sandbox.subscribe 'leave', set_fluid_template
