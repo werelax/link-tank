@@ -5,34 +5,49 @@
 # (3) Define behaviour by filters (like rails controllers)
 # (4) Trigger by events
 
+# Improvements:
+# (1) The W.Channel() should be external.
+#   1.a - Provide a way to feed events to the machine flexibly
+#         (being W.Channel adapted to this)
+
+# Things I like:
+#   - Extremely flexible: you can use it in many different ways
+#   - CONTINUATIONS in transitions (I really like this!)
+#   - Filters (at least the _.reduce is cool!)
+#   - The @send input events
+
+# Points to think:
+#   - Remove the user-triggered transitions. Transitions should
+#     only happen after an INPUT (event)
+#
+#   - Clear a little bit what happens to the arguments of the event
+#
+#   - A FLEXIBLE way to notify state changes
+#     something where I can plug an event emitter later
+
 exports = (this['W'] ||= {})
 
 class StateMachine
-  constructor: (name: @name, channel: @channel, events: @events) ->
-    @channel ||= new Wrlx.Channel()
-    @_event_prefix = if @name? then "#{@name}:" else ""
-    @active_state = undefined
-    @states = {}
+  constructor: (events: @events, context: @context) ->
+    @events  ||= {}
+    @context ||= {}
+    @states      = {}
     @transitions = {}
-    @filters = {}
-    @send = {}
+    @filters     = {}
+    @send        = {}
 
   start: (initial_state) ->
-    sm = @
-    for event in @events
-      do (event) ->
-        origins = if event.from == '*'
-          state for state,__ of sm.states
-        else if typeof(event.from) == 'string'
-          [event.from]
-        else
-          event.from
-        handler = (args...) ->
-          if _.indexOf(origins, sm.active_state) != -1
-            sm.state_change.apply(sm, [event.to].concat(args))
-        sm.channel.subscribe event.name, handler
-        sm.send[event.name] = handler
+    @parse_events()
     @enter_state(initial_state)
+
+  parse_events: ->
+    sm = @
+    all_states = _.keys(@states)
+    _.each @events, (event) ->
+      event.from = all_states if event.from == '*'
+      origins = if _.isArray(event.from) then event.from else [event.from]
+      sm.send[event.name] = (args...) ->
+        sm.state_change(event.to, args) if sm.active_state in origins
 
   validate_transition: (new_state) ->
     current = @states[@active_state]
@@ -40,10 +55,10 @@ class StateMachine
     restricted ||= current.restrict? && _.indexOf(current.restrict, new_state) > -1
     return !restricted
 
-  state_change: (new_state, args...) ->
+  state_change: (new_state, args) ->
     return unless @validate_transition(new_state)
     sm = @
-    context = {}
+    context = sm.context
     leave_previus_continuation = ->
       sm.leave_current_state()
       # after_filters here
@@ -58,13 +73,14 @@ class StateMachine
     if @transitions[transition_name]
       @transitions[transition_name].call(context, leave_previus_continuation, enter_next_continuation, args)
     else
-      leave_current_state()
-      enter_state.apply(this, args)
+      sm.leave_current_state()
+      sm.enter_state(new_state, context, args)
+
   leave_current_state: ->
     @states[@active_state].leave()
     @active_state = null
+
   enter_state: (new_state, context, args) ->
-    context ||= {}
     @states[@active_state].leave() if @active_state
     @states[new_state].enter.apply(context, args)
     @active_state = new_state
@@ -73,27 +89,20 @@ class StateMachine
   before_filters_for: (state) ->
     filters = []
     append = (source) ->
-      if source?
-        if _.isFunction(source)
-          filters.push(source)
-        else if _.isArray(source)
-          filters = filters.concat(source.reverse())
+      return unless source?
+      if _.isFunction(source)
+        filters.push(source)
+      else if _.isArray(source)
+        filters = filters.concat(source.reverse())
     append(@filters["before_#{state}"])
     append(@filters.before_all)
     return filters
-
-  subscribe: (args...) ->
-    @channel.subscribe.apply(@channel, args)
-  publish: (args...) ->
-    @channel.publish.apply(@channel, args)
 
 exports['StateMachine'] = StateMachine
 
 ### Examples of usage
 
 window.sm = new Wrlx.StateMachine
-  name: 'test_machine'
-  states: ['uno', 'dos', 'tres']
   events: [
     {name: 'move_to_dos', from: 'uno', to: 'dos'},
     {name: 'move_to_tres', from: '*', to: 'tres'} ]
@@ -128,3 +137,5 @@ sm.filters =
       next()) ]
 
 sm.start('uno')
+
+###

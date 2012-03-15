@@ -29,6 +29,8 @@ Main = new W.Page
     Session['logged'] = true
     root = @sandbox.get_root()
     root.html T['templates/pages/main/root']
+    search_results = $('.e-search-results', root)
+    search_results.html T['templates/pages/main/idle']
     cb()
   do_search: (query) ->
     console.log 'Searching for:' + query

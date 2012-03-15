@@ -1,0 +1,3 @@
+.alert.alert-block.span7
+  %h4.alert-heading Search
+  Select a bucket and type something to search

@@ -7,40 +7,4 @@
         %input.span8{type: 'text'}
 
 .row
-  .span9
-    %h5.page-header
-      234 Results
-      %small &nbsp; of 1023 pages in the bucket
-
-.row{style: 'margin-bottom: 20px'}
-  .span9
-    %h3{style:'text-decoration:underline'} I am some web Title
-  .span9
-    %a www.thisis-theurl.com/and/the/seciton.html
-  .span9
-    %p Lorem ipsum ad his scripta blandit partiendo, eum fastidii accumsan euripidis in, eum liber hendrerit an. Qui ut wisi vocibus suscipiantur, quo dicit ridens inciderint id. Quo mundi lobortis reformidans eu, legimus senserit definiebas an eos. Eu sit tincidunt incorrupte definitionem, vis mutat affert percipit cu, eirmod consectetuer signiferumque eu per.
-
-.row{style: 'margin-bottom: 20px'}
-  .span9
-    %h3{style:'text-decoration:underline'} I am some web Title
-  .span9
-    %a www.thisis-theurl.com/and/the/seciton.html
-  .span9
-    %p Lorem ipsum ad his scripta blandit partiendo, eum fastidii accumsan euripidis in, eum liber hendrerit an. Qui ut wisi vocibus suscipiantur, quo dicit ridens inciderint id. Quo mundi lobortis reformidans eu, legimus senserit definiebas an eos. Eu sit tincidunt incorrupte definitionem, vis mutat affert percipit cu, eirmod consectetuer signiferumque eu per.
-
-.row{style: 'margin-bottom: 20px'}
-  .span9
-    %h3{style:'text-decoration:underline'} I am some web Title
-  .span9
-    %a www.thisis-theurl.com/and/the/seciton.html
-  .span9
-    %p Lorem ipsum ad his scripta blandit partiendo, eum fastidii accumsan euripidis in, eum liber hendrerit an. Qui ut wisi vocibus suscipiantur, quo dicit ridens inciderint id. Quo mundi lobortis reformidans eu, legimus senserit definiebas an eos. Eu sit tincidunt incorrupte definitionem, vis mutat affert percipit cu, eirmod consectetuer signiferumque eu per.
-
-.row{style: 'margin-bottom: 20px'}
-  .span9
-    %h3{style:'text-decoration:underline'} I am some web Title
-  .span9
-    %a www.thisis-theurl.com/and/the/seciton.html
-  .span9
-    %p Lorem ipsum ad his scripta blandit partiendo, eum fastidii accumsan euripidis in, eum liber hendrerit an. Qui ut wisi vocibus suscipiantur, quo dicit ridens inciderint id. Quo mundi lobortis reformidans eu, legimus senserit definiebas an eos. Eu sit tincidunt incorrupte definitionem, vis mutat affert percipit cu, eirmod consectetuer signiferumque eu per.
-
+  .span9.e-search-results
